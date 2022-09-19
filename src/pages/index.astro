@@ -1,0 +1,27 @@
+---
+const BASE = import.meta.env.DEV ? './public' : import.meta.env.SITE.replace(/\/+$/, '');
+
+async function * stream(cb) {
+	for await(const num of Array.from({length: 10}, (v, n) => n)) {
+		await new Promise(resolve => {
+			setTimeout(resolve, 300);
+		});
+		yield cb(num);
+		yield '\n';
+	}
+}
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<h1>Astro</h1>
+		{stream(n => (<li>{n}</li>))}
+		{fetch(BASE + '/foo.html').then(r => r.body)}
+	</body>
+</html>
