@@ -21,7 +21,8 @@ async function * stream(cb) {
 	</head>
 	<body>
 		<h1>Astro</h1>
+		{BASE + '/foo.html'}
 		{stream(n => (<li>{n}</li>))}
-		{fetch(BASE + '/foo.html').then(r => r.body)}
+		<div set:html={fetch(BASE + '/foo.html')}></div>
 	</body>
 </html>
